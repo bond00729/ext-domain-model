@@ -19,14 +19,22 @@ open class TestMe {
     }
 }
 
-struct Money {
+protocol CustomStringConvertible {
+    var description: String {
+        get
+    }
+}
+
+struct Money: CustomStringConvertible {
     
     var amount : Int = 0
     var currency : String = ""
+    var description: String
     
     init(amount : Int, currency : String) {
         self.amount = amount
         self.currency = currency
+        self.description = "\(self.currency) +  \(self.amount)"
     }
     
     func convert (_ toCurr : String) -> Money {
@@ -88,6 +96,7 @@ struct Money {
 class Job {
     var title: String
     var type: JobType
+    var description: String
     
     enum JobType {
         case Salary(Int)
@@ -97,6 +106,7 @@ class Job {
     init(title: String, type: JobType) {
         self.title = title
         self.type = type
+        self.description = "\(self.title), \(self.type)"
     }
     
     func calculateIncome (_ hours: Int) -> Int {
@@ -122,6 +132,7 @@ class Person {
     var firstName: String
     var lastName: String
     var age: Int
+    var description: String
     var job: Job? {
         set (newJob){
             if self.age > 15 {
@@ -147,6 +158,7 @@ class Person {
         self.firstName = firstName
         self.lastName = lastName
         self.age = age
+        self.description = "\(self.firstName) \(self.lastName), \(self.age)"
         if age < 16 {
             self.job = nil
         }
@@ -163,6 +175,7 @@ class Person {
 
 class Family {
     var family: [Person] = []
+    var description: String
     
     init(spouse1: Person, spouse2: Person) {
         family.append(spouse1)
@@ -173,6 +186,7 @@ class Family {
                 spouse2.spouse = spouse1
             }
         }
+        self.description = "\(spouse1.description), \(spouse2.description)"
     }
     
     func householdIncome () -> Int {
