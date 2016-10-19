@@ -48,6 +48,15 @@ extension Double {
     }
 }
 
+func +(left: Money, right: Money) -> Money {
+    return left.add(other: right)
+}
+
+func -(left: Money, right: Money) -> Money {
+    return left.subtract(other: right)
+}
+
+
 struct Money: CustomStringConvertible, Mathematics {
     
     var amount : Int = 0
@@ -57,7 +66,7 @@ struct Money: CustomStringConvertible, Mathematics {
     init(amount : Int, currency : String) {
         self.amount = amount
         self.currency = currency
-        self.description = "\(self.currency) +  \(self.amount)"
+        self.description = "\(self.currency)\(self.amount).0"
     }
     
     func convert (_ toCurr : String) -> Money {
