@@ -25,7 +25,30 @@ protocol CustomStringConvertible {
     }
 }
 
-struct Money: CustomStringConvertible {
+protocol Mathematics {
+    func add(other: Money) -> Money
+    func subtract(other: Money) -> Money
+}
+
+extension Double {
+    var USD: Money {
+        return Money(amount: Int(self), currency: "USD")
+    }
+    var EUR: Money {
+        return Money(amount: Int(self), currency: "EUR")
+    }
+    var GBP: Money {
+        return Money(amount: Int(self), currency: "GBP")
+    }
+    var CAN: Money {
+        return Money(amount: Int(self), currency: "CAN")
+    }
+    var YEN: Money {
+        return Money(amount: Int(self), currency: "YEN")
+    }
+}
+
+struct Money: CustomStringConvertible, Mathematics {
     
     var amount : Int = 0
     var currency : String = ""
@@ -82,12 +105,12 @@ struct Money: CustomStringConvertible {
         return Money(amount: 0, currency: toCurr)
     }
     
-    func add (_ other : Money) -> Money {
+    func add (other : Money) -> Money {
         let newSelf = self.convert(other.currency)
         return Money(amount: newSelf.amount + other.amount, currency: other.currency)
     }
     
-    func subtract (_ other : Money) -> Money {
+    func subtract (other : Money) -> Money {
         let newSelf = self.convert(other.currency)
         return Money(amount: newSelf.amount - other.amount, currency: other.currency)
     }
